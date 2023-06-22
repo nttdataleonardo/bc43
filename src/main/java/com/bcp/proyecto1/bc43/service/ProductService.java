@@ -6,10 +6,7 @@ import com.bcp.proyecto1.bc43.model.Product;
 import com.bcp.proyecto1.bc43.model.ProductType;
 import com.bcp.proyecto1.bc43.repository.ClientRepository;
 import com.bcp.proyecto1.bc43.repository.ProductRepository;
-import io.reactivex.rxjava3.core.Completable;
-import io.reactivex.rxjava3.core.Flowable;
-import io.reactivex.rxjava3.core.Maybe;
-import io.reactivex.rxjava3.core.Single;
+import io.reactivex.rxjava3.core.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
@@ -25,16 +22,24 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-    public Flowable<Product> getAllProducts() {
-        return Flowable.fromPublisher(productRepository.findAll());
+    public Observable<Product> getAllProducts() {
+        return Observable.fromPublisher(productRepository.findAll());
     }
 
-    public Completable createProduct(Product product) {
-        return Completable.create(emitter -> {
-            productRepository.save(product)
-                    .doOnSuccess(savedProduct -> emitter.onComplete())
-                    .doOnError(error -> emitter.onError(error))
-                    .subscribe();
+    public Observable<Product> createProduct(Product product) {
+        return Observable.create(emitter -> {
+            // Obtener el cliente asociado al producto
+            Client client = clientService.getClientById(product.getIdClient()).blockingFirst();
+            ProductType[] types = {ProductType.AHORRO,ProductType.CUENTA_CORRIENTE,ProductType.PLAZO_FIJO}
+            if (client != null && productRepository.countByClientIdAndTypeContains(product.getIdClient(), types) > 0) {
+                emitter.onError(new IllegalArgumentException("El cliente ya tiene una cuenta de ahorro, cuenta corriente o cuenta a plazo fijo."));
+            } else {
+                System.out.println(client);
+                productRepository.save(product)
+                        .doOnSuccess(savedProduct -> emitter.onComplete())
+                        .doOnError(error -> emitter.onError(error))
+                        .subscribe();
+            }
         });
     }
 
@@ -65,20 +70,26 @@ public class ProductService {
                 });
     }
 
-    public Completable updateProduct(String id, Product updatedProduct) {
-        return Maybe.fromPublisher(productRepository.findById(id))
-                .flatMapCompletable(existingProduct -> {
-                    existingProduct.setName(updatedProduct.getName());
-                    existingProduct.setType(updatedProduct.getType());
-                    return Completable.fromPublisher(productRepository.save(existingProduct));
-                });
+    public Observable<Product> updateProduct(String id, Product updatedProduct) {
+        return Observable.create(emitter -> {
+            productRepository.findById(id)
+                    .subscribe(existingProduct -> {
+                        existingProduct.setName(updatedProduct.getName());
+                        existingProduct.setType(updatedProduct.getType());
+                        productRepository.save(existingProduct)
+                                .subscribe(savedProduct -> {
+                                    emitter.onNext(savedProduct);
+                                    emitter.onComplete();
+                                }, error -> emitter.onError(error));
+                    }, error -> emitter.onError(error));
+        });
     }
 
-    public Flowable<Product> getProductById(String id) {
-        return Flowable.fromPublisher(productRepository.findById(id));
+    public Observable<Product> getProductById(String id) {
+        return Observable.fromPublisher(productRepository.findById(id));
     }
 
-    public Completable deleteProductById(String id) {
-        return Completable.fromPublisher(productRepository.deleteById(id));
+    public Observable deleteProductById(String id) {
+        return Observable.fromPublisher(productRepository.deleteById(id));
     }
 }

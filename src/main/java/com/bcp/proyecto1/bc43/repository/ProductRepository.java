@@ -9,5 +9,5 @@ import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
 
 public interface ProductRepository extends ReactiveMongoRepository<Product, String> {
     @Query("{'idClient': ?0, 'type': { $all: ?1 }}")
-    Flowable<Long> countByClientIdAndTypeContains(String idClient, ProductType[] types);
+    Single<Integer> countByClientIdAndTypeContains(String idClient, ProductType[] types);
 }
