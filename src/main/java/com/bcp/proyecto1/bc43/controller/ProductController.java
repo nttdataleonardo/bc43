@@ -21,10 +21,16 @@ public class ProductController {
         return productService.getAllProducts();
     }
 
-    @PostMapping(produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    /*@PostMapping(produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public Observable<Product> createProduct(@RequestBody Product Product) {
         return productService.createProduct(Product);
+    }*/
+
+    @PostMapping(produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    @ResponseStatus(HttpStatus.CREATED)
+    public Observable<Product> createProduct(@RequestBody Product Product) {
+        return productService.saveProduct(Product);
     }
 
     @PutMapping(value = "/{id}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
