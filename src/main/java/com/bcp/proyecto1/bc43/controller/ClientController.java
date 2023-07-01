@@ -33,7 +33,7 @@ public class ClientController {
 
     @GetMapping(value = "/{id}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     @ResponseStatus(HttpStatus.OK)
-    public Observable<Client> getClientById(@PathVariable String id) {
+    public Maybe<Client> getClientById(@PathVariable String id) {
         return clientService.getClientById(id);
     }
 

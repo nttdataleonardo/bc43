@@ -8,6 +8,6 @@ public interface ClientService {
     Observable<Client> getAllClients();
     Observable<Client> createClient(Client client);
     Observable<Client> updateClient(String id, Client updatedClient);
-    Observable<Client> getClientById(String id);
+    Maybe<Client> getClientById(String id);
     Observable<Void> deleteClientById(String id);
 }

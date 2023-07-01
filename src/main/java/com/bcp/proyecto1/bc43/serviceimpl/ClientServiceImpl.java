@@ -3,6 +3,7 @@ package com.bcp.proyecto1.bc43.serviceimpl;
 import com.bcp.proyecto1.bc43.model.Client;
 import com.bcp.proyecto1.bc43.repository.ClientRepository;
 import com.bcp.proyecto1.bc43.service.ClientService;
+import io.reactivex.rxjava3.core.Maybe;
 import io.reactivex.rxjava3.core.Observable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,8 +46,8 @@ public class ClientServiceImpl implements ClientService {
     }
 
 
-    public Observable<Client> getClientById(String id) {
-        return Observable.fromPublisher(clientRepository.findById(id));
+    public Maybe<Client> getClientById(String id) {
+        return Maybe.fromPublisher(clientRepository.findById(id));
     }
 
     /*public Completable deleteClientById(String id) {

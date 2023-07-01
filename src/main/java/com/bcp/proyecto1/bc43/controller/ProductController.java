@@ -21,16 +21,10 @@ public class ProductController {
         return productService.getAllProducts();
     }
 
-    /*@PostMapping(produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    @ResponseStatus(HttpStatus.CREATED)
-    public Observable<Product> createProduct(@RequestBody Product Product) {
-        return productService.createProduct(Product);
-    }*/
-
     @PostMapping(produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public Observable<Product> createProduct(@RequestBody Product Product) {
-        return productService.saveProduct(Product);
+    public Maybe<Product> createProduct(@RequestBody Product Product) {
+        return productService.createProduct(Product);
     }
 
     @PutMapping(value = "/{id}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
@@ -41,7 +35,7 @@ public class ProductController {
 
     @GetMapping(value = "/{id}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     @ResponseStatus(HttpStatus.OK)
-    public Observable<Product> getProductById(@PathVariable String id) {
+    public Maybe<Product> getProductById(@PathVariable String id) {
         return productService.getProductById(id);
     }
 
@@ -49,6 +43,43 @@ public class ProductController {
     @ResponseStatus(HttpStatus.OK)
     public Observable<Void> deleteProductById(@PathVariable String id) {
         return productService.deleteProductById(id);
+    }
+
+
+    @PutMapping(value = "/deposit/{id}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    public Observable<Product> deposit(@PathVariable String id, @RequestBody Product updatedProduct) {
+        return productService.depositProduct(id, updatedProduct);
+    }
+
+    @PutMapping(value = "/withdrawal/{id}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    public Observable<Product> withdrawal(@PathVariable String id, @RequestBody Product updatedProduct) {
+        return productService.withdrawal(id, updatedProduct);
+    }
+
+    @PutMapping(value = "/paycredit/{id}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    public Maybe<Product> paycredit(@PathVariable String id, @RequestBody Product updatedProduct) {
+        return productService.paycredit(id, updatedProduct);
+    }
+
+    /*@PutMapping(value = "/paytotalcredit/{id}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    public Maybe<Product> paytotalcredit(@PathVariable String id, @RequestBody Product updatedProduct) {
+        return productService.paytotalcredit(id, updatedProduct);
+    }*/
+
+    @PutMapping(value = "/chargeconsumptions/{id}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    public Maybe<Product> chargeconsumptions(@PathVariable String id, @RequestBody Product updatedProduct) {
+        return productService.chargeconsumptions(id, updatedProduct);
+    }
+
+    @GetMapping(value = "/availablebalances/{idClient}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    public Flowable<Product> availablebalances(@PathVariable String idClient) {
+        return productService.availablebalances(idClient);
     }
 
 }

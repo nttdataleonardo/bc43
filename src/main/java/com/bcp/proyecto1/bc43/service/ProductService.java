@@ -9,10 +9,18 @@ import io.reactivex.rxjava3.core.*;
 import org.springframework.beans.factory.annotation.Autowired;
 public interface ProductService {
     Observable<Product> getAllProducts();
-    Observable<Product> createProduct(Product product);
-    Single<Product> validateClientAndProduct(Client client, Product product);
-    Observable<Product> saveProduct(Product product);
+    Maybe<Product> createProduct(Product product);
+    Maybe<Product> validateClientAndProduct(Client client, Product product);
+    Maybe<Product> saveProduct(Product product);
     Observable<Product> updateProduct(String id, Product updatedProduct);
-    Observable<Product> getProductById(String id);
+    Maybe<Product> getProductById(String id);
     Observable deleteProductById(String id);
+
+    Observable<Product> depositProduct(String id, Product updatedProduct);
+    Observable<Product> withdrawal(String id, Product updatedProduct);
+    Maybe<Product> paycredit(String id, Product updatedProduct);
+    //Maybe<Product> paytotalcredit(String id, Product product);
+    Maybe<Product> chargeconsumptions(String id, Product product);
+
+    Flowable<Product> availablebalances(String idClient);
 }
