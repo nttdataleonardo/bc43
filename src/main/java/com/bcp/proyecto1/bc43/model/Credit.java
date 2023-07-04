@@ -16,7 +16,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Document(collection = "credits")
-public class Credit extends  Product{
+public class Credit {
     @Id
     private String id;
     private BigDecimal balance;

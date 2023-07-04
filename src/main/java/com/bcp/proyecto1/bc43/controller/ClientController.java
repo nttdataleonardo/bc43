@@ -15,7 +15,7 @@ public class ClientController {
     private ClientService clientService;
 
     @GetMapping(produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    public Observable<Client> getAllUsers() {
+    public Observable<Client> getAllClients() {
         return clientService.getAllClients();
     }
 

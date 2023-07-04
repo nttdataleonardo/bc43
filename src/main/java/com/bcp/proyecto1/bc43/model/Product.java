@@ -26,15 +26,6 @@ public class Product {
     @JsonIgnore
     private BigDecimal paycredit;
 
-
-    public Product(String name, ProductType type, String idClient, BigDecimal balance, BigDecimal credit) {
-        this.name = name;
-        this.type = type;
-        this.idClient = idClient;
-        this.balance = balance;
-        this.credit = credit;
-    }
-
     public Product(){
         this.balance = BigDecimal.ZERO;
         this.paycredit = BigDecimal.ZERO;

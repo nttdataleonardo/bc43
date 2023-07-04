@@ -1,0 +1,454 @@
+openapi: 3.0.3
+info:
+  title: Proyecto 3 BC43 Grupo 5 - Leonardo Condori Ancco
+  description: Proyecto 1 <br> El sistema a desarrollar está planteado en el contexto del negocio bancario que a medida que se va avanzando en los proyectos, se irá ampliando en base a este mismo proyecto. <br><br> Proyecto 2 <br> El sistema a desarrollar está planteado en el contexto del negocio bancario que extiende las funcionalidades y requerimientos presentados en el proyecto I. Por lo tanto, en este enunciado solo se agregan nuevas características o modificaciones a las ya presentada en el proyecto anterior. <br><br> Proyecto 3 <br> El sistema a desarrollar está planteado en el contexto del negocio bancario que extiende las funcionalidades y requerimientos presentados en el proyecto II. Por lo tanto, en este enunciado solo se agregan nuevas características o modificaciones a las ya presentada en el proyecto anterior.
+  version: 1.0.0
+tags:
+  - name: Clientes
+    description: Operaciones relacionadas con los clientes
+  - name: Productos
+    description: Operaciones relacionadas con los productos
+  - name: Titulares
+    description: Operaciones relacionadas con los holders
+  - name: Firmantes Autorizados
+    description: Operaciones relacionadas con los firmantes autorizados
+paths:
+  /clients:
+    get:
+      tags:
+        - Clientes
+      summary: Obtener todos los clientes
+      operationId: getAllClients
+      responses:
+        '200':
+          description: Lista de clientes
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Client'
+    post:
+      tags:
+        - Clientes
+      summary: Crear un nuevo cliente
+      operationId: createClient
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Client'
+      responses:
+        '201':
+          description: Cliente creado exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Client'
+  /clients/{id}:
+    get:
+      tags:
+        - Clientes
+      summary: Obtener un cliente por su ID
+      operationId: getClientById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Cliente encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Client'
+        '404':
+          description: Cliente no encontrado
+    put:
+      tags:
+        - Clientes
+      summary: Actualizar un cliente por su ID
+      operationId: updateClientById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Client'
+      responses:
+        '200':
+          description: Cliente actualizado exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Client'
+        '404':
+          description: Cliente no encontrado
+    delete:
+      tags:
+        - Clientes
+      summary: Eliminar un cliente por su ID
+      operationId: deleteClientById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Cliente eliminado exitosamente
+  /products:
+    get:
+      tags:
+        - Clientes
+      summary: Obtener todos los productos
+      operationId: getAllProducts
+      responses:
+        '200':
+          description: Lista de productos
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+    post:
+      tags:
+        - Clientes
+      summary: Crear un nuevo producto
+      operationId: createProduct
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Product'
+      responses:
+        '201':
+          description: Producto creado exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+  /products/{id}:
+    get:
+      tags:
+        - Productos
+      summary: Obtener un producto por su ID
+      operationId: getProductById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Producto encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '404':
+          description: Producto no encontrado
+    put:
+      tags:
+        - Productos
+      summary: Actualizar un producto por su ID
+      operationId: updateProductById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Product'
+      responses:
+        '200':
+          description: Producto actualizado exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '404':
+          description: Producto no encontrado
+    delete:
+      tags:
+        - Productos
+      summary: Eliminar un producto por su ID
+      operationId: deleteProductById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Producto eliminado exitosamente
+  /holders:
+    get:
+      tags:
+        - Titulares
+      summary: Obtener todos los titulares
+      operationId: getAllHolders
+      responses:
+        '200':
+          description: Lista de titulares
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Holder'
+    post:
+      tags:
+        - Titulares
+      summary: Crear un nuevo titular
+      operationId: createHolder
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Holder'
+      responses:
+        '201':
+          description: Titular creado exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Holder'
+  /holders/{id}:
+    get:
+      tags:
+        - Titulares
+      summary: Obtener un titular por su ID
+      operationId: getHolderById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Titular encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Holder'
+        '404':
+          description: Titular no encontrado
+    put:
+      tags:
+        - Titulares
+      summary: Actualizar un titular por su ID
+      operationId: updateHolderById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Holder'
+      responses:
+        '200':
+          description: Titular actualizado exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Holder'
+        '404':
+          description: Titular no encontrado
+    delete:
+      tags:
+        - Titulares
+      summary: Eliminar un titular por su ID
+      operationId: deleteHolderById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Titular eliminado exitosamente
+  /authorized-signers:
+    get:
+      tags:
+        - Firmantes Autorizados
+      summary: Obtener todos los firmantes autorizados
+      operationId: getAllAuthorizedSigners
+      responses:
+        '200':
+          description: Lista de firmantes autorizados
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AuthorizedSigner'
+    post:
+      tags:
+        - Firmantes Autorizados
+      summary: Crear un nuevo firmante autorizado
+      operationId: createAuthorizedSigner
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthorizedSigner'
+      responses:
+        '201':
+          description: Firmante autorizado creado exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthorizedSigner'
+  /authorized-signers/{id}:
+    get:
+      tags:
+        - Firmantes Autorizados
+      summary: Obtener un firmante autorizado por su ID
+      operationId: getAuthorizedSignerById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Firmante autorizado encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthorizedSigner'
+        '404':
+          description: Firmante autorizado no encontrado
+    put:
+      tags:
+        - Firmantes Autorizados
+      summary: Actualizar un firmante autorizado por su ID
+      operationId: updateAuthorizedSignerById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthorizedSigner'
+      responses:
+        '200':
+          description: Firmante autorizado actualizado exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthorizedSigner'
+        '404':
+          description: Firmante autorizado no encontrado
+    delete:
+      tags:
+        - Firmantes Autorizados
+      summary: Eliminar un firmante autorizado por su ID
+      operationId: deleteAuthorizedSignerById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Firmante autorizado eliminado exitosamente
+components:
+  schemas:
+    Client:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        type:
+          $ref: '#/components/schemas/ClientType'
+    ClientType:
+      type: string
+      enum:
+        - PERSONAL
+        - BUSINESS
+        - PERSONAL_VIP
+        - BUSINESS_PYME
+    Product:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        type:
+          $ref: '#/components/schemas/ProductType'
+        idClient:
+          type: string
+        balance:
+          type: number
+          format: double
+        credit:
+          type: number
+          format: double
+    ProductType:
+      type: string
+      enum:
+        - AHORRO
+        - CUENTA_CORRIENTE
+        - PLAZO_FIJO
+        - CREDITO_PERSONAL
+        - CREDITO_EMPRESARIAL
+        - TARJETA_CREDITO_PERSONAL
+        - TARJETA_CREDITO_EMPRESARIAL
+    Holder:
+      type: object
+      properties:
+        Id:
+          type: string
+        name:
+          type: string
+        idProduct:
+          type: string
+    AuthorizedSigner:
+      type: object
+      properties:
+        Id:
+          type: string
+        name:
+          type: string
+        idProduct:
+          type: string

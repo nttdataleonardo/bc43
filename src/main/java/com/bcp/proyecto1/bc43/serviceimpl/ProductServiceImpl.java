@@ -43,10 +43,16 @@ public class ProductServiceImpl implements ProductService {
     public Maybe<Product> validateClientAndProduct(Client client, Product product) {
         ProductType[] typesToPersonal = {ProductType.AHORRO, ProductType.CUENTA_CORRIENTE, ProductType.PLAZO_FIJO};
         ProductType[] typesToBusiness = {ProductType.AHORRO, ProductType.PLAZO_FIJO};
-        if (ClientType.PERSONAL.equals(client.getType())) { //CLIENTE PERSONAL
+        if (ClientType.PERSONAL.equals(client.getType())) {
             return existsProductByTypes(product, typesToPersonal,"Un cliente personal solo puede tener un máximo de una cuenta de ahorro, una cuenta corriente o cuentas a plazo fijo");
-        } else { // CLIENTE EMPRESARIAL
+        } else if (ClientType.BUSINESS.equals(client.getType())){
             return existsProductByTypes(product, typesToBusiness,"Un cliente empresarial no puede tener una cuenta de ahorro o de plazo fijo, pero sí múltiples cuentas corrientes");
+        }  else if (ClientType.PERSONAL_VIP.equals(client.getType())){
+            return Maybe.empty();
+        }  else if (ClientType.BUSINESS_PYME.equals(client.getType())){
+            return Maybe.empty();
+        }  else {
+            return Maybe.empty();
         }
     }
 
